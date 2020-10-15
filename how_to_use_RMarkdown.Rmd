@@ -36,3 +36,5 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 '>' can be used to indent for blockquotes 
 
 ## '##' are used for headers (more hashtags = larger header)
+
+note: every assignment for this class must be submitted as an RMarkdown file.

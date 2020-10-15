@@ -1,0 +1,35 @@
+---
+title: "homework1"
+author: "Collin"
+date: "10/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+# 1 **Vectors and Simulations**
+- **a)** *Generate random samples with replacement of size 100 from each of the types. Call the resulting vectors of character strings as: Animal, Color, Attribute (1 point).*
+
+```{r question1}
+animals = c("cat","dog","cow","squirrel")
+colors = c("white","black","brown","red")
+attr = c("big","small","angry","cute", "finicky")
+
+Animal = sample(animals,100, replace = TRUE)
+Color = sample(colors,100,replace= TRUE)
+Attribute = sample(attr,100,replace = TRUE)
+Animal
+Color
+Attribute
+```
+
+
+
