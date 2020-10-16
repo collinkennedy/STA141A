@@ -388,53 +388,118 @@ Animal = sample(animals,100, replace = TRUE)
 Color = sample(colors,100,replace= TRUE)
 Attribute = sample(attr,100,replace = TRUE)
 Animal</code></pre>
-<pre><code>##   [1] &quot;cat&quot;      &quot;cat&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;dog&quot;      &quot;cow&quot;     
-##   [7] &quot;dog&quot;      &quot;squirrel&quot; &quot;squirrel&quot; &quot;cat&quot;      &quot;cat&quot;      &quot;cow&quot;     
-##  [13] &quot;squirrel&quot; &quot;dog&quot;      &quot;squirrel&quot; &quot;cat&quot;      &quot;dog&quot;      &quot;cat&quot;     
+<pre><code>##   [1] &quot;cat&quot;      &quot;cow&quot;      &quot;squirrel&quot; &quot;squirrel&quot; &quot;cow&quot;      &quot;cow&quot;     
+##   [7] &quot;squirrel&quot; &quot;squirrel&quot; &quot;cow&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;dog&quot;     
+##  [13] &quot;dog&quot;      &quot;squirrel&quot; &quot;cat&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;cat&quot;     
 ##  [19] &quot;squirrel&quot; &quot;dog&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;squirrel&quot;
-##  [25] &quot;dog&quot;      &quot;squirrel&quot; &quot;squirrel&quot; &quot;dog&quot;      &quot;cow&quot;      &quot;dog&quot;     
-##  [31] &quot;dog&quot;      &quot;cow&quot;      &quot;cat&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;cat&quot;     
-##  [37] &quot;dog&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;dog&quot;      &quot;dog&quot;     
-##  [43] &quot;squirrel&quot; &quot;squirrel&quot; &quot;cow&quot;      &quot;cow&quot;      &quot;cow&quot;      &quot;cat&quot;     
-##  [49] &quot;cat&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;dog&quot;      &quot;squirrel&quot; &quot;squirrel&quot;
-##  [55] &quot;cow&quot;      &quot;cat&quot;      &quot;dog&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;cow&quot;     
-##  [61] &quot;dog&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;cow&quot;     
-##  [67] &quot;cow&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;cow&quot;      &quot;squirrel&quot; &quot;squirrel&quot;
-##  [73] &quot;cat&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;cow&quot;     
-##  [79] &quot;cow&quot;      &quot;dog&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;dog&quot;      &quot;cat&quot;     
-##  [85] &quot;squirrel&quot; &quot;cat&quot;      &quot;cat&quot;      &quot;squirrel&quot; &quot;squirrel&quot; &quot;squirrel&quot;
-##  [91] &quot;dog&quot;      &quot;cow&quot;      &quot;cow&quot;      &quot;squirrel&quot; &quot;dog&quot;      &quot;dog&quot;     
-##  [97] &quot;cat&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;dog&quot;</code></pre>
+##  [25] &quot;cat&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;squirrel&quot; &quot;cat&quot;     
+##  [31] &quot;cow&quot;      &quot;squirrel&quot; &quot;dog&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;dog&quot;     
+##  [37] &quot;cat&quot;      &quot;squirrel&quot; &quot;dog&quot;      &quot;cow&quot;      &quot;cat&quot;      &quot;dog&quot;     
+##  [43] &quot;dog&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;dog&quot;      &quot;squirrel&quot;
+##  [49] &quot;dog&quot;      &quot;cat&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;cat&quot;     
+##  [55] &quot;cow&quot;      &quot;cow&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;squirrel&quot; &quot;cow&quot;     
+##  [61] &quot;cat&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;squirrel&quot;
+##  [67] &quot;squirrel&quot; &quot;cow&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;squirrel&quot;
+##  [73] &quot;dog&quot;      &quot;dog&quot;      &quot;dog&quot;      &quot;squirrel&quot; &quot;cow&quot;      &quot;squirrel&quot;
+##  [79] &quot;cow&quot;      &quot;dog&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;cat&quot;     
+##  [85] &quot;cat&quot;      &quot;cat&quot;      &quot;cow&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;cow&quot;     
+##  [91] &quot;cow&quot;      &quot;cat&quot;      &quot;cat&quot;      &quot;squirrel&quot; &quot;dog&quot;      &quot;cow&quot;     
+##  [97] &quot;dog&quot;      &quot;dog&quot;      &quot;cat&quot;      &quot;dog&quot;</code></pre>
 <pre class="r"><code>Color</code></pre>
-<pre><code>##   [1] &quot;white&quot; &quot;red&quot;   &quot;brown&quot; &quot;white&quot; &quot;brown&quot; &quot;brown&quot; &quot;red&quot;   &quot;white&quot;
-##   [9] &quot;brown&quot; &quot;white&quot; &quot;black&quot; &quot;red&quot;   &quot;white&quot; &quot;white&quot; &quot;brown&quot; &quot;white&quot;
-##  [17] &quot;brown&quot; &quot;white&quot; &quot;brown&quot; &quot;white&quot; &quot;white&quot; &quot;black&quot; &quot;black&quot; &quot;red&quot;  
-##  [25] &quot;red&quot;   &quot;black&quot; &quot;white&quot; &quot;black&quot; &quot;white&quot; &quot;red&quot;   &quot;brown&quot; &quot;brown&quot;
-##  [33] &quot;black&quot; &quot;red&quot;   &quot;black&quot; &quot;brown&quot; &quot;black&quot; &quot;red&quot;   &quot;brown&quot; &quot;white&quot;
-##  [41] &quot;brown&quot; &quot;black&quot; &quot;white&quot; &quot;red&quot;   &quot;black&quot; &quot;white&quot; &quot;white&quot; &quot;red&quot;  
-##  [49] &quot;brown&quot; &quot;red&quot;   &quot;red&quot;   &quot;brown&quot; &quot;red&quot;   &quot;white&quot; &quot;brown&quot; &quot;red&quot;  
-##  [57] &quot;brown&quot; &quot;white&quot; &quot;white&quot; &quot;brown&quot; &quot;white&quot; &quot;black&quot; &quot;brown&quot; &quot;white&quot;
-##  [65] &quot;brown&quot; &quot;white&quot; &quot;red&quot;   &quot;black&quot; &quot;black&quot; &quot;brown&quot; &quot;red&quot;   &quot;brown&quot;
-##  [73] &quot;red&quot;   &quot;brown&quot; &quot;brown&quot; &quot;white&quot; &quot;white&quot; &quot;brown&quot; &quot;black&quot; &quot;red&quot;  
-##  [81] &quot;white&quot; &quot;brown&quot; &quot;red&quot;   &quot;black&quot; &quot;white&quot; &quot;white&quot; &quot;white&quot; &quot;red&quot;  
-##  [89] &quot;black&quot; &quot;black&quot; &quot;brown&quot; &quot;white&quot; &quot;red&quot;   &quot;red&quot;   &quot;brown&quot; &quot;black&quot;
-##  [97] &quot;white&quot; &quot;white&quot; &quot;red&quot;   &quot;white&quot;</code></pre>
+<pre><code>##   [1] &quot;white&quot; &quot;black&quot; &quot;red&quot;   &quot;black&quot; &quot;black&quot; &quot;brown&quot; &quot;black&quot; &quot;black&quot;
+##   [9] &quot;brown&quot; &quot;white&quot; &quot;white&quot; &quot;brown&quot; &quot;white&quot; &quot;white&quot; &quot;black&quot; &quot;white&quot;
+##  [17] &quot;white&quot; &quot;black&quot; &quot;black&quot; &quot;white&quot; &quot;brown&quot; &quot;white&quot; &quot;red&quot;   &quot;white&quot;
+##  [25] &quot;white&quot; &quot;brown&quot; &quot;brown&quot; &quot;black&quot; &quot;brown&quot; &quot;red&quot;   &quot;red&quot;   &quot;black&quot;
+##  [33] &quot;white&quot; &quot;brown&quot; &quot;white&quot; &quot;red&quot;   &quot;brown&quot; &quot;brown&quot; &quot;black&quot; &quot;brown&quot;
+##  [41] &quot;brown&quot; &quot;red&quot;   &quot;black&quot; &quot;white&quot; &quot;brown&quot; &quot;red&quot;   &quot;brown&quot; &quot;brown&quot;
+##  [49] &quot;black&quot; &quot;red&quot;   &quot;black&quot; &quot;black&quot; &quot;brown&quot; &quot;brown&quot; &quot;brown&quot; &quot;black&quot;
+##  [57] &quot;red&quot;   &quot;brown&quot; &quot;red&quot;   &quot;white&quot; &quot;white&quot; &quot;red&quot;   &quot;white&quot; &quot;white&quot;
+##  [65] &quot;black&quot; &quot;red&quot;   &quot;red&quot;   &quot;red&quot;   &quot;black&quot; &quot;black&quot; &quot;white&quot; &quot;red&quot;  
+##  [73] &quot;red&quot;   &quot;white&quot; &quot;black&quot; &quot;white&quot; &quot;black&quot; &quot;red&quot;   &quot;white&quot; &quot;brown&quot;
+##  [81] &quot;white&quot; &quot;brown&quot; &quot;black&quot; &quot;white&quot; &quot;white&quot; &quot;brown&quot; &quot;red&quot;   &quot;black&quot;
+##  [89] &quot;red&quot;   &quot;black&quot; &quot;black&quot; &quot;black&quot; &quot;red&quot;   &quot;black&quot; &quot;white&quot; &quot;red&quot;  
+##  [97] &quot;white&quot; &quot;brown&quot; &quot;brown&quot; &quot;black&quot;</code></pre>
 <pre class="r"><code>Attribute</code></pre>
-<pre><code>##   [1] &quot;big&quot;     &quot;cute&quot;    &quot;cute&quot;    &quot;small&quot;   &quot;cute&quot;    &quot;angry&quot;   &quot;finicky&quot;
-##   [8] &quot;angry&quot;   &quot;big&quot;     &quot;small&quot;   &quot;finicky&quot; &quot;angry&quot;   &quot;angry&quot;   &quot;small&quot;  
-##  [15] &quot;small&quot;   &quot;small&quot;   &quot;angry&quot;   &quot;finicky&quot; &quot;angry&quot;   &quot;small&quot;   &quot;big&quot;    
-##  [22] &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;angry&quot;  
-##  [29] &quot;big&quot;     &quot;small&quot;   &quot;small&quot;   &quot;small&quot;   &quot;big&quot;     &quot;angry&quot;   &quot;cute&quot;   
-##  [36] &quot;angry&quot;   &quot;finicky&quot; &quot;big&quot;     &quot;angry&quot;   &quot;cute&quot;    &quot;finicky&quot; &quot;small&quot;  
-##  [43] &quot;angry&quot;   &quot;angry&quot;   &quot;small&quot;   &quot;angry&quot;   &quot;finicky&quot; &quot;small&quot;   &quot;finicky&quot;
-##  [50] &quot;angry&quot;   &quot;finicky&quot; &quot;small&quot;   &quot;small&quot;   &quot;angry&quot;   &quot;finicky&quot; &quot;cute&quot;   
-##  [57] &quot;small&quot;   &quot;finicky&quot; &quot;small&quot;   &quot;angry&quot;   &quot;angry&quot;   &quot;angry&quot;   &quot;big&quot;    
-##  [64] &quot;finicky&quot; &quot;finicky&quot; &quot;angry&quot;   &quot;cute&quot;    &quot;cute&quot;    &quot;small&quot;   &quot;angry&quot;  
-##  [71] &quot;small&quot;   &quot;angry&quot;   &quot;angry&quot;   &quot;angry&quot;   &quot;cute&quot;    &quot;cute&quot;    &quot;angry&quot;  
-##  [78] &quot;big&quot;     &quot;cute&quot;    &quot;small&quot;   &quot;angry&quot;   &quot;finicky&quot; &quot;cute&quot;    &quot;big&quot;    
-##  [85] &quot;big&quot;     &quot;angry&quot;   &quot;small&quot;   &quot;finicky&quot; &quot;finicky&quot; &quot;angry&quot;   &quot;cute&quot;   
-##  [92] &quot;small&quot;   &quot;finicky&quot; &quot;big&quot;     &quot;big&quot;     &quot;big&quot;     &quot;cute&quot;    &quot;small&quot;  
-##  [99] &quot;cute&quot;    &quot;angry&quot;</code></pre>
+<pre><code>##   [1] &quot;angry&quot;   &quot;finicky&quot; &quot;cute&quot;    &quot;angry&quot;   &quot;small&quot;   &quot;finicky&quot; &quot;cute&quot;   
+##   [8] &quot;big&quot;     &quot;small&quot;   &quot;cute&quot;    &quot;angry&quot;   &quot;cute&quot;    &quot;big&quot;     &quot;big&quot;    
+##  [15] &quot;big&quot;     &quot;cute&quot;    &quot;finicky&quot; &quot;angry&quot;   &quot;small&quot;   &quot;angry&quot;   &quot;finicky&quot;
+##  [22] &quot;small&quot;   &quot;big&quot;     &quot;small&quot;   &quot;angry&quot;   &quot;angry&quot;   &quot;cute&quot;    &quot;small&quot;  
+##  [29] &quot;finicky&quot; &quot;finicky&quot; &quot;angry&quot;   &quot;cute&quot;    &quot;cute&quot;    &quot;big&quot;     &quot;finicky&quot;
+##  [36] &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;cute&quot;    &quot;small&quot;   &quot;small&quot;   &quot;finicky&quot;
+##  [43] &quot;finicky&quot; &quot;big&quot;     &quot;big&quot;     &quot;big&quot;     &quot;small&quot;   &quot;small&quot;   &quot;cute&quot;   
+##  [50] &quot;big&quot;     &quot;big&quot;     &quot;finicky&quot; &quot;cute&quot;    &quot;angry&quot;   &quot;small&quot;   &quot;finicky&quot;
+##  [57] &quot;cute&quot;    &quot;cute&quot;    &quot;finicky&quot; &quot;finicky&quot; &quot;small&quot;   &quot;cute&quot;    &quot;cute&quot;   
+##  [64] &quot;finicky&quot; &quot;angry&quot;   &quot;big&quot;     &quot;small&quot;   &quot;angry&quot;   &quot;big&quot;     &quot;big&quot;    
+##  [71] &quot;big&quot;     &quot;small&quot;   &quot;angry&quot;   &quot;cute&quot;    &quot;small&quot;   &quot;finicky&quot; &quot;angry&quot;  
+##  [78] &quot;finicky&quot; &quot;cute&quot;    &quot;big&quot;     &quot;cute&quot;    &quot;big&quot;     &quot;angry&quot;   &quot;finicky&quot;
+##  [85] &quot;small&quot;   &quot;big&quot;     &quot;small&quot;   &quot;big&quot;     &quot;angry&quot;   &quot;cute&quot;    &quot;finicky&quot;
+##  [92] &quot;angry&quot;   &quot;small&quot;   &quot;small&quot;   &quot;angry&quot;   &quot;small&quot;   &quot;big&quot;     &quot;finicky&quot;
+##  [99] &quot;cute&quot;    &quot;cute&quot;</code></pre>
+<ul>
+<li><strong>b)</strong> <em>Compute how many animals in the sample are cats or dogs (1 point).</em></li>
+</ul>
+<pre class="r"><code>count = 0
+for(anim in Animal){
+  if (anim == &quot;cat&quot; | anim == &quot;dog&quot;){
+    count = count + 1
+  }
+}
+count</code></pre>
+<pre><code>## [1] 57</code></pre>
+<ul>
+<li><strong>c)</strong> <em>Write R code to combine the results to produce phrases (character strings) describing the animals as in this example: big white dog (2 points).</em></li>
+</ul>
+<pre class="r"><code>#attribute color animal
+listOfVecs = list(attr, colors, animals)
+randomPhraseVector = c()
+for(vector in listOfVecs){
+  appendWord = sample(vector,1)
+  randomPhraseVector = append(randomPhraseVector,appendWord)
+  
+}
+paste(randomPhraseVector)</code></pre>
+<pre><code>## [1] &quot;small&quot;    &quot;red&quot;      &quot;squirrel&quot;</code></pre>
+<ul>
+<li><strong>d)</strong> <em>Create a contingency table between Animal and Attribute (1 point).</em></li>
+</ul>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package 'dplyr' was built under R version 3.6.2</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>contingTable = table(Animal,Attribute)
+contingTable</code></pre>
+<pre><code>##           Attribute
+## Animal     angry big cute finicky small
+##   cat          8   7    4       4     5
+##   cow          5   2    5       6     7
+##   dog          3   8   11       5     2
+##   squirrel     1   3    4       4     6</code></pre>
+</div>
+<div id="matrices" class="section level1">
+<h1><strong>2 Matrices</strong></h1>
+<ul>
+<li><strong>a)</strong> <em>Create the matrix A and the vector y corresponding to the matrix equation Ax=y,where A∈ℝ5×5 and x,y∈ℝ5 (1 point).</em></li>
+</ul>
+<pre class="r"><code>A = matrix(c(1,2,3,4,5,
+             2,1,2,3,4,
+             3,2,1,2,3,
+             4,3,2,1,1,
+             5,4,3,2,1),5,5,byrow = TRUE)
+
+A</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    2    1    2    3    4
+## [3,]    3    2    1    2    3
+## [4,]    4    3    2    1    1
+## [5,]    5    4    3    2    1</code></pre>
+<pre class="r"><code>y = c(7,-1,3,5,17)</code></pre>
 </div>
 
 
