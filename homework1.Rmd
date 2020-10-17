@@ -69,19 +69,157 @@ contingTable
 A = matrix(c(1,2,3,4,5,
              2,1,2,3,4,
              3,2,1,2,3,
-             4,3,2,1,1,
+             4,3,2,1,2,
              5,4,3,2,1),5,5,byrow = TRUE)
 
 A
 
-y = c(7,-1,3,5,17)
+y = c(7,-1,-3,5,17)
 ```
 
+- **b)** *Determine if the matrix A is invertible (2 points).*
 ```{r question2b}
+if(det(A)!=0){
+  print("Matrix A is invertible")
+  
+}else{
+  print("The matrix is NOT invertible")
+}
 
+
+```
+
+- **c)** *Find the solution of the system of linear equations (2 points).*
+```{r question2c}
+solve(A,y)
+
+#or
+colnames(A) <- paste0('x', 1:5)
+
+solve(A) %*% y
+
+```
+
+- **d)** *Verify that your solution is correct (1 point).*
+
+![I verified the solution using eMathHelps RREF calculator online: .](/Users/collinkennedy/Desktop/Screen Shot 2020-10-17 at 11.38.54 AM.png)
+
+## **3 Data Exploration**
+```{r question3}
+#load data
+load("/Users/collinkennedy/Google Drive/Programming Folder (4Transfer to Collin's Files V2)/R/STA141A/countypop.RData")
+
+```
+
+**a)** *How many unique 2-letter state abbreviations are there (1 point)?*
+```{r question3a}
+vecOfAbbrevs <- unique(countypop$abbr)
+length(vecOfAbbrevs)
+
+```
+there are 51 unique abbreviations (this makes sense since the data includes DC)
+
+
+**b)** *What is the total number of counties in the US (1 point)?*
+```{r question 3b}
+length(countypop$county)
+
+
+```
+There are 3142 counties in the US.
+
+**c)** *How many unique county names are there (1 point)?*
+```{r question 3c}
+vecOfUniqueCounties = unique(countypop$county)
+length(vecOfUniqueCounties)
+
+
+```
+There are 1877 *unique* county names.
+
+**d)** *What are the top 10 most common county names (2 points)?*
+```{r question 3d}
+countyFreq <- as.data.frame(table(countypop$county))
+countyFreq = countyFreq %>% arrange(desc(Freq))
+#top 10 most common county names:
+countyFreq[1:10,]
+
+```
+
+
+**e)** *Which state has the largest number of counties? Which state has the smallest number of counties (1 points)?*
+```{r question 3e}
+countyAbbr <- as.data.frame(table(countypop$abbr))
+countyAbbr  = countyAbbr %>% arrange(desc(Freq))
+countyAbbr 
+
+```
+Texas has the most counties (254), while Delaware has the fewest (3).
+
+
+**f)** *What is the average population of a county in the US (1 point)?*
+```{r question 3f}
+mean(countypop$pop_2015)
+
+```
+
+**g)** *Which state has the largest county in terms of population? How many people live in the largest county in terms of population (2 points)?*
+```{r question 3g}
+subDF = countypop %>% arrange(desc(pop_2015))
+county = subDF$county[1]
+#the largest county in the US by population:
+county
+
+#the largest
+pop = subDF$pop_2015[1]
+pop
+
+```
+
+
+**h)** *What is the largest county in terms of population of each of the states (2 points)?*
+```{r question 3h}
+
+
+```
+
+**i)** *What is the average population of the 100 largest counties in the US (2 points)?*
+```{r question 3i}
+countyPopByPop = countypop %>% arrange(desc(pop_2015))
+mean(countyPopByPop$pop_2015[1:100])
 
 ```
 
 
 
+**j)** *How many people live in each of the states (2 points)?*
+```{r question 3j}
+totalPopDF = group_by(countypop, abbr) %>% 
+  summarize(totalPopulation = sum(pop_2015)) %>%
+  filter(abbr != "DC") %>% 
+  arrange(desc(totalPopulation))
+print(totalPopDF, n= 50)
 
+```
+
+
+
+**k)** *What is the average population of a county in California (2 points)?*
+```{r question 3k}
+caliDF = countypop %>% filter(abbr == "CA")
+#average population of a county in California:
+mean(caliDF$pop_2015)
+
+```
+
+
+
+**l)** *What is the average population of a county in each of the states (2 points)?*
+```{r question 3l}
+meanPopDF = group_by(countypop, abbr) %>% 
+  summarize(meanPopulationOfACounty = mean(pop_2015)) %>%
+  filter(abbr != "DC") %>% 
+  arrange(desc(meanPopulationOfACounty))
+print(meanPopDF, n= 50)
+
+```
