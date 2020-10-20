@@ -165,12 +165,13 @@ mean(countypop$pop_2015)
 
 **g)** *Which state has the largest county in terms of population? How many people live in the largest county in terms of population (2 points)?*
 ```{r question 3g}
-subDF = countypop %>% arrange(desc(pop_2015))
-county = subDF$county[1]
-#the largest county in the US by population:
-county
 
-#the largest
+subDF = countypop %>% arrange(desc(pop_2015))
+state = subDF$abbr[1]
+#which state
+state
+
+#the population in the largest county in that state
 pop = subDF$pop_2015[1]
 pop
 
@@ -179,6 +180,14 @@ pop
 
 **h)** *What is the largest county in terms of population of each of the states (2 points)?*
 ```{r question 3h}
+subDF = countypop %>% arrange(desc(pop_2015))
+county = subDF$county[1]
+#the largest county in the US by population:
+county
+
+#the largest
+pop = subDF$pop_2015[1]
+pop
 
 
 ```
