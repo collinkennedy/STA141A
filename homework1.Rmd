@@ -180,14 +180,15 @@ pop
 
 **h)** *What is the largest county in terms of population of each of the states (2 points)?*
 ```{r question 3h}
-subDF = countypop %>% arrange(desc(pop_2015))
-county = subDF$county[1]
-#the largest county in the US by population:
-county
+hDF2 = countypop %>%
+  group_by(abbr) %>%
+  filter(abbr != "DC") %>% 
+  slice(which.max(pop_2015)) %>% 
+  arrange(desc(pop_2015)) %>% #slice selects rows by position->in this case
+  print(n=50)                         #it chooses the greatest population value of each county
+                            #since we are grouping by State (abbr)
 
-#the largest
-pop = subDF$pop_2015[1]
-pop
+
 
 
 ```
