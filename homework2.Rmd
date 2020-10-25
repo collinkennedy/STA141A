@@ -1,0 +1,362 @@
+---
+title: "homework2"
+author: "Collin"
+date: "10/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **Homework 2**
+
+**1.** *Generate a single simple random sample of length n <- 50 from the binomial distribution with the parameters k <- 10, p <- 0.4 (1 point).*
+```{r}
+randomBinomSample = rbinom(50,10,.4) #generate a random sample of 50 observations from
+                                      #binomial distribution where #trials = 10, p =.4
+randomBinomSample
+
+```
+
+
+**2.** *Write a function that takes a sample as its input and returns the estimates of k and p given above (3 points).*
+```{r}
+estimateKHat = function(randomBinSamp){
+  sampleMean = mean(randomBinSamp) #calculate Xbar
+  oneOverN = (length(randomBinSamp)-1)/(length(randomBinSamp)) #(n-1)/n to get populationvar
+  popVar = oneOverN*var(randomBinSamp) #actually calculate population variance
+  denominator = sampleMean - popVar
+  kHat = ((sampleMean)^2)/(denominator)
+  return(kHat)
+}
+estimateKHat(randomBinomSample)
+  
+estimatePHat = function(randomBinSamp){
+  sampleMean = mean(randomBinSamp)
+  returnedKHat = estimateKHat(randomBinSamp)
+  pHat = sampleMean/returnedKHat
+  return(pHat)
+}
+estimatePHat(randomBinomSample)
+
+
+```
+
+
+**3.** *Generate N <- 1000 samples of size n <- 50 (as in the first question) and calculate N <- 1000 estimates of k and N <- 1000 estimates of p (6 points if no loops are used in the code, 2 points if any loop (for, while, repeat, etc.) is used in the code ).*
+
+```{r}
+randomSamples = list(replicate(1000,rbinom(50,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+#vector of estimated KHats
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+#estimatedKHats
+mean(estimatedKHats)
+
+#create a vector of estimated PHats
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+#estimatedPHats
+mean(estimatedPHats)
+
+
+
+```
+
+
+**4** *Repeat Question 3 when n <- 100 and when n <- 250 (2 points).*
+
+```{r}
+#when n = 100
+
+randomSamples = list(replicate(1000,rbinom(100,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+#vector of estimated KHats
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+#estimatedKHats
+mean(estimatedKHats)
+
+#create a vector of estimated PHats
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+#estimatedPHats
+mean(estimatedPHats)
+
+
+
+#when n = 250
+randomSamples = list(replicate(1000,rbinom(250,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+#vector of estimated KHats
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+#estimatedKHats
+mean(estimatedKHats)
+
+#create a vector of estimated PHats
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+#estimatedPHats
+mean(estimatedPHats)
+
+```
+
+
+**5** *Estimate the bias and the mean squared error (MSE) of k̂ and the bias and the MSE of p̂ or each sample size (n <- 50, n <- 100 and n <- 250). Do the estimators seem to overestimate or underestimate the parameters? How do the bias and the MSE change when the sample size increases? (4 points).*
+
+```{r}
+bias = function(vec,ev){
+  expValEstimatorHat = mean(vec)
+  return(expValEstimatorHat-ev)
+}
+mse = function(vec,ev){
+  expValEstimatorHat = mean(vec)
+  sse = sum((vec - ev)^2)
+  meanSquaredError = sse/length(vec)
+  return(meanSquaredError)
+  
+}
+#when n=50
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(50,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+#calculate bias for kHat when n=50
+bias(estimatedKHats,10)
+
+#calculate mse for kHat when n = 50
+mse(estimatedKHats,10)
+
+#calculate bias for pHat when n =50
+bias(estimatedPHats,.4)
+
+#calculate mse for pHat when n = 50
+mse(estimatedPHats,.4)
+
+#when n=100
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(100,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+#calculate bias for kHat when n=100
+bias(estimatedKHats,10)
+
+#calculate mse for kHat when n = 100
+mse(estimatedKHats,10)
+
+#calculate bias for pHat when n =100
+bias(estimatedPHats,.4)
+
+#calculate mse for pHat when n = 100
+mse(estimatedPHats,.4)
+
+
+
+
+#when n = 250
+
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(250,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+#calculate bias for kHat when n=250
+bias(estimatedKHats,10)
+
+#calculate mse for kHat when n = 250
+mse(estimatedKHats,10)
+
+#calculate bias for pHat when n =250
+bias(estimatedPHats,.4)
+
+#calculate mse for pHat when n = 250
+mse(estimatedPHats,.4)
+
+
+
+infoMatrix = matrix(1:12, nrow=4,ncol = 3 )
+rownames(infoMatrix)=c("kHat MSE","kHat Bias","pHat MSE", "pHat Bias")
+colnames(infoMatrix) = c("n=50","n=100","n=250")
+infoMatrix[1:4,1]= c(711.1065,1.7945,.0134,.0058)
+
+infoMatrix[1:4,2] = c(8.1532,.3849,.0065,.0049)
+
+infoMatrix[1:4,3] = c(1.6885,.0576,.0024,.0039)
+
+infoMatrix
+
+
+```
+The estimators appear to overestimate the true values of p and k. However, as the sample size increases, we see that (thanks to the law of large numbers) the estimators approach their true values, as seen by the decreasing trends in both bias and MSE as sample size increases.
+
+
+
+**6**
+**a** *Make a single plot using ggplot2 that contains three box plots of the estimates of the parameter k when n <- 50, n <- 100, n <- 250 (the first from the left box plot has to describe the estimates when n <- 50, the second from the left box plot has to describe the estimates when n <- 100 and the third from the left box plot has to describe the estimates n <- 250). Include the true value of the parameter as a horizontal line (geom_hline() and use the argument color) and label the plot appropriately (6 points).*
+```{r}
+#when n=50
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(50,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats50 = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+#when n=100
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(100,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats100 = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+#when n = 250
+
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(250,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats250 = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
+
+library(ggplot2)
+vecKHats = c(estimatedKHats50,estimatedKHats100,estimatedKHats250)
+ens = c(rep(50,1000),rep(100,1000),rep(250,1000))
+
+kHatDF = data.frame(kHats = vecKHats,n = ens)
+kHatDF$n = as.factor(kHatDF$n)
+
+kHatBoxPlot <- ggplot(kHatDF) + 
+  geom_boxplot(mapping = aes(x=n, y=kHats,color = n))+
+  geom_hline(yintercept = 10)+
+  labs(title="Plot of kHats at each Sample Size ",x="sample size (n)", y = "K Estimates")
+
+kHatBoxPlot
+
+```
+
+
+**b** *k̂ can obtain values that are far away from the true value of the parameter when the sample size is small and the box plots might not be particularly informative in such a situation. Remove the estimates from the plot that are outside of the interval [0,50]so that the box plots are more informative (4 points).*
+
+```{r}
+kHatBoxPlotRestricted <- ggplot(kHatDF) + 
+  geom_boxplot(mapping = aes(x=n, y=kHats,color = n))+
+  geom_hline(yintercept = 10)+
+  labs(title="Plot of kHats at each Sample Size ",x="sample size (n)", y = "K Estimates")+
+  coord_cartesian(ylim = c(0, 50))
+
+kHatBoxPlotRestricted
+
+
+
+```
+
+
+**c** *Make the same plot with three box plots for the estimates of the parameter p (b part does not apply here) (2 points).*
+```{r}
+#when n=50
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(50,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats50 = apply(randomSampleDF,1,estimateKHat)
+
+
+estimatedPHats50 = apply(randomSampleDF,1,estimatePHat)
+
+
+
+#when n=100
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(100,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats100 = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats100 = apply(randomSampleDF,1,estimatePHat)
+
+
+
+
+#when n = 250
+
+set.seed(2)
+randomSamples = list(replicate(1000,rbinom(250,10,.4)))
+
+randomSamplesDF = data.frame(randomSamps = randomSamples)
+
+randomSampleDF = t(randomSamplesDF)
+
+estimatedKHats250 = apply(randomSampleDF,1,estimateKHat)
+
+estimatedPHats250 = apply(randomSampleDF,1,estimatePHat)
+
+vecPHats = c(estimatedPHats50,estimatedPHats100,estimatedPHats250)
+pHatDF = data.frame(pHats = vecPHats,n = ens)
+pHatDF$n = as.factor(pHatDF$n)
+library(dplyr)
+pHatDF = pHatDF %>% 
+  filter(pHats >= 0)
+
+
+
+pHatBoxPlot <- ggplot(pHatDF) + 
+  geom_boxplot(mapping = aes(x=n, y=pHats,color = n))+
+  geom_hline(yintercept = .4)+
+  labs(title="Plot of pHats at each Sample Size ",x="sample size (n)", y = "P Estimates")
+
+
+pHatBoxPlot
+
+
+
+```
+
+**d** *Describe how both of these plots change when the sample size increases (2 points).*
+Both of these plots demonstrate the tendency of estimates to approach their true values as the sample size increases. Both plots show the same trend: a narrowing of the boxplots with fewer outliers as the sample size increases from n=50 to n=250.
+
