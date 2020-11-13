@@ -141,7 +141,8 @@ unique(dplyr::filter(mpg, class != "2seater")$class)
 ### statiscal transformations
 ?diamonds
 ggplot(data = diamonds)	+
-	geom_bar(mapping = aes(x = cut))
+	geom_bar(mapping = aes(x = cut))#no stat parameter used
+
 # On the x-axis, the chart displays cut, a variable from diamonds. On the y-axis, it displays count, but count is not a variable in diamonds! Where does count come from?
 # Many graphs, like scatterplots, plot the raw values of your dataset. Other graphs, like bar charts, calculate new values to plot.
 # The algorithm used to calculate new values for a graph is called a stat, short for statistical transformation.
@@ -157,7 +158,8 @@ ggplot(data = df) +
   geom_bar(mapping = aes(x = Class, y = Freq))	
 ggplot(data = df) +
 	geom_bar(mapping = aes(x = Class, y = Freq),stat="identity")	
-
+  #the stat parameter here set to "identity" says the data is taken as is,
+  #so y (Freq) determines the y axis
 
 
 # colouring bar plots
@@ -170,26 +172,30 @@ ggplot(data = diamonds) +
 
 
 
-### position adjustements
+### position adjustments
 # dealing with overplotting in a scatter plot
 # jitter
 ggplot(data = mpg) + 
 	geom_point(mapping = aes(x = displ, y = hwy))
-# the plot displays only 126 points, even though there are 234 observations in the dataset
+# the plot displays only ~126 points, even though there are 234 observations in the dataset
+
 ggplot(data = mpg) + 
-	geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
+	geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")#this position param set to "jitter" exposes other observations that were hidden
 ggplot(data = mpg) + 
-	geom_jitter(mapping = aes(x = displ, y = hwy),width = 0.2,color=alpha("black",.5))
+	geom_jitter(mapping = aes(x = displ, y = hwy),width = 0.2,color=alpha("black",.5))#make em transparent with the .5
+
 # geom_bin2d
 # histogram
 # an alternative to geom_point() in the presence of overplotting
 ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
 	geom_point()
 ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
-	geom_bin2d()
-# install.packages("hexbin")
+	geom_bin2d()#gives you a sense of how many observations lie in a certain spot
+
+
+install.packages("hexbin")
 ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
-	geom_hex(bins = 70)
+	geom_hex(bins = 70) #more bins = smaller and more refined
 ggplot(data = diamonds, mapping = aes(x = carat, y = price)) +
 	geom_hex(bins = 50)
 ggplot(data = diamonds, mapping = aes(x = carat, y = price, colour = cut)) +

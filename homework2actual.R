@@ -5,11 +5,10 @@ library(plyr)
 install.packages("plyr")
 ??rdply
 
+set.seed(2)
 randomBinomSample = rbinom(50,10,.4) #generate a random sample of 50 observations from
                                       #binomial distribution where #trials = 10, p =.4
 randomBinomSample
-?rbinom
-
 
 
 #2
@@ -23,7 +22,14 @@ estimateKHat = function(randomBinSamp){
   kHat = ((sampleMean)^2)/(denominator)
   return(kHat)
 }
-estimateKHat(randomBinomSample)
+
+estimateKHat2 = function(randomBinSamp){
+  sampleMean = mean(randomBinSamp) #calculate Xbar
+  
+  kHat = ((sampleMean)^2)/(sampleMean-1/(length(randomBinSamp))*(sum((randomBinSamp-sampleMean)^2)))
+  return(kHat)
+}
+estimateKHat2(randomBinomSample)
   
 estimatePHat = function(randomBinSamp){
   sampleMean = mean(randomBinSamp) #calculate the mean of the binomial sample vector
@@ -33,11 +39,15 @@ estimatePHat = function(randomBinSamp){
 }
 estimatePHat(randomBinomSample)
 
+
+
 #3
 #generate 1000 random samples of size 50
-randomSamples = list(replicate(1000,rbinom(500,10,.4)))
+randomSamples = list(replicate(1000,rbinom(50,10,.4)))
+randomSamples
 
 randomSamplesDF = data.frame(randomSamps = randomSamples)
+
 
 randomSampleDF = t(randomSamplesDF)
 estimatedKHats = apply(randomSampleDF,1,estimateKHat)
@@ -72,6 +82,7 @@ View(randomSampleDF)
 
 estimatedKHats50 = apply(randomSampleDF,1,estimateKHat)
 which.max(estimatedKHats50)
+estimatedKHats50[996]
 
 estimatedPHats = apply(randomSampleDF,1,estimatePHat)
 
@@ -127,6 +138,7 @@ randomSampleDF = t(randomSamplesDF)
 estimatedKHats250 = apply(randomSampleDF,1,estimateKHat)
 
 estimatedPHats = apply(randomSampleDF,1,estimatePHat)
+
 
 #calculate bias for kHat when n=250
 bias(estimatedKHats,10)

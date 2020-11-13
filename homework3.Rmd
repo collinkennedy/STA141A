@@ -1,0 +1,130 @@
+---
+title: "homework 3"
+author: "Collin"
+date: "11/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **Homework 3**
+
+### Multiple Linear Regression
+
+**1)**
+**a)**
+```{r}
+library(dplyr)
+library(ggplot2)
+set.seed(1)
+n <- 100
+x1 <- runif(n)
+x2 <- runif(n,10,20)
+y <- 2+2*x1+0.3*x2+rnorm(n)
+trueRegDF = data.frame(x1 = x1, x2 = x2, y = y)
+
+```
+B0 = 2
+B1 = 2
+B2 = 0.3
+sigma squared is 1
+
+**b)**
+```{r}
+cor.test(x1,x2) #.017
+ggplot(data = trueRegDF, mapping = aes(x = x1, y = x2))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
+```
+
+
+**c)**
+```{r}
+reg1 = lm(y~x1+x2, data = trueRegDF)
+summary(reg1)
+
+
+```
+B0,B1, and B2 are estimated to be 1.97, 1.93, and .30 respectively. These are all extremely close to the true values of the parameters. The residual standard error is .9675, which is close to the true value of sigma (1). 
+
+I can reject the null hypothesis that x1 = 0, as well as the null hypothesis that x2 = 0. Both are highly statistically significant factors (this is consistent with the true model).
+
+**d)**
+```{r}
+reg2 = lm(y~x1, data = trueRegDF)
+summary(reg2)
+
+```
+B0 is estimated now to be 6.5.
+
+B1 is estimated to be about 1.98.
+
+The estimate for B0 is now nowhere near the true value of B0. The estimate for B1 is still close to the true value of B1. Again, I would reject the null hypothesis that B1 = 0, in favor of the alternative hypothesis that it does not equal 0. This is consistent with what we know about the true model.
+
+The residual standard error is larger than in the model with all variables. It's also farther away from its true value (sigma is estimated to be 1.267, compared to the true value of sigma, which we know to be 1).
+
+**e)**
+```{r}
+reg3 = lm(y~x2, data = trueRegDF)
+summary(reg3)
+
+```
+
+The estimate for B0 is closer to its true value than in the previous model, but still not quite there. The estimate for B2 does appear to be close to its true value (estimated at .30467, whereas the true value is .3). The residual standard error is 1.094, which is closer to the true value of sigma. It is also an improvement in error compared to the previous model, which only included x1.
+
+
+**2**
+**a)**
+```{r}
+set.seed(1)
+n <- 100
+x1 <- runif(n)
+x2 <- 0.5*x1+rnorm(n,0,.01)
+y <- 2+2*x1+0.3*x2+rnorm(n)
+trueRegDF2 = data.frame(x1 = x1, x2 = x2, y = y)
+
+```
+**(repeating)b)**
+```{r}
+cor.test(x1,x2)
+ggplot(data = trueRegDF2, mapping = aes(x = x1, y = x2))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
+```
+
+**(repeating)c)**
+```{r}
+reg1 = lm(y~x1+x2, data = trueRegDF2)
+summary(reg1)
+
+
+
+```
+
+
+
+**(repeating)d)**
+```{r}
+reg2 = lm(y~x1, data = trueRegDF2)
+summary(reg2)
+
+
+```
+
+
+**(repeating)e)**
+```{r}
+reg3 = lm(y~x2, data = trueRegDF2)
+summary(reg3)
+
+```
+
+
+
+

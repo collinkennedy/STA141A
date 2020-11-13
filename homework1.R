@@ -107,11 +107,12 @@ View(hDF)
 
 hDF2 = countypop %>%
   group_by(abbr) %>%
+  filter(abbr != "DC") %>% 
   slice(which.max(pop_2015))#slice selects rows by position->in this case
                             #it chooses the greatest population value of each county
                             #since we are grouping by State (abbr)
-hDF2
 
+print(hDF2[1:50,])
 
 #i
 countyPopByPop = countypop %>% arrange(desc(pop_2015))
