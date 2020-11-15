@@ -24,7 +24,6 @@ x1 <- runif(n)
 x2 <- runif(n,10,20)
 y <- 2+2*x1+0.3*x2+rnorm(n)
 trueRegDF = data.frame(x1 = x1, x2 = x2, y = y)
-
 ```
 B0 = 2
 B1 = 2
@@ -88,6 +87,8 @@ y <- 2+2*x1+0.3*x2+rnorm(n)
 trueRegDF2 = data.frame(x1 = x1, x2 = x2, y = y)
 
 ```
+
+
 **(repeating)b)**
 ```{r}
 cor.test(x1,x2)
@@ -106,7 +107,7 @@ summary(reg1)
 
 
 ```
-
+B0, B1, and B2 are estimated to be 2.1305, -1.7540, and 7.3967 respectively. I am unsure about whether or not these values or close to their true values, as I do not know the true values of the parameters, since the model was created from vectors of random samples. I cannot reject the null hypothesis that B1 = 0, nor the hypothesis that B2 = 0 at the 5% significance level. 
 
 
 **(repeating)d)**
@@ -116,6 +117,7 @@ summary(reg2)
 
 
 ```
+B0 and B1 are estimated to be 2.1172 and 1.9675 respectively. B0 is closer to its true value (2), and I can reject the null hypothesis that B1 = 0, in favor of the alternative hypothesis that it does not equal 0 at the %5 sig. level. The residual standard error, s, is close to 1, which is close to our value of sigma/ sigma-squared.
 
 
 **(repeating)e)**
@@ -124,7 +126,49 @@ reg3 = lm(y~x2, data = trueRegDF2)
 summary(reg3)
 
 ```
+B0 and B2 are estimated to be 2.1199 and 3.9273 respectively. Again, B0 is relatively close to its true value of 2. At the 5% significance level we reject the null hypothesis that B2 = 0 in favor of the alternative hypothesis that it does not equal 0. Similarly to the previous model, the residual standard error is 1.051, which is close to our value of sigma/sigma-squared.
+
+The main difference between these models stems from how x2 is generated. Where
 
 
+**3**
+```{r}
+x1 <- c(x1, 0.1)
+x2 <- c(x2, 0.8)
+y <- c(y, 6)
+
+#now re-fitting
+newRegDF = data.frame(x1 = x1, x2 = x2, y = y)
+
+#repeating c)
+reg1 = lm(y~x1+x2, data = newRegDF)
+summary(reg1)
+
+
+
+par(mfrow = c(2,2))
+plot(reg1)
+
+```
+
+
+```{r}
+#repeating d)
+ reg2 = lm(y~x1, data = newRegDF)
+summary(reg2)
+par(mfrow = c(2,2))
+plot(reg2)
+
+
+```
+
+```{r}
+reg3 = lm(y~x2,data =newRegDF)
+summary(reg3)
+par(mfrow = c(2,2))
+plot(reg3)
+anova(reg3)
+
+```
 
 
