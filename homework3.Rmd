@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## **Homework 3**
-
 ### Multiple Linear Regression
 
 **1)**
@@ -24,6 +23,7 @@ x1 <- runif(n)
 x2 <- runif(n,10,20)
 y <- 2+2*x1+0.3*x2+rnorm(n)
 trueRegDF = data.frame(x1 = x1, x2 = x2, y = y)
+
 ```
 B0 = 2
 B1 = 2
@@ -101,19 +101,20 @@ ggplot(data = trueRegDF2, mapping = aes(x = x1, y = x2))+
 
 **(repeating)c)**
 ```{r}
-reg1 = lm(y~x1+x2, data = trueRegDF2)
-summary(reg1)
+reg4 = lm(y~x1+x2, data = trueRegDF2)
+summary(reg4)
 
+plot(reg4)
 
 
 ```
-B0, B1, and B2 are estimated to be 2.1305, -1.7540, and 7.3967 respectively. I am unsure about whether or not these values or close to their true values, as I do not know the true values of the parameters, since the model was created from vectors of random samples. I cannot reject the null hypothesis that B1 = 0, nor the hypothesis that B2 = 0 at the 5% significance level. 
+B0, B1, and B2 are estimated to be 2.1305, -1.7540, and 7.3967 respectively. I am unsure about whether or not these values or close to their true values, as I do not know the true values of the parameters, since the model was created from vectors of random samples. I cannot reject the null hypothesis that B1 = 0, nor the hypothesis that B2 = 0 at the 5% significance level. Notice that the standard errors for X1 and X2 are incredibly high, thanks to high multicollinearity. This harms the precision of our model.
 
 
 **(repeating)d)**
 ```{r}
-reg2 = lm(y~x1, data = trueRegDF2)
-summary(reg2)
+reg5 = lm(y~x1, data = trueRegDF2)
+summary(reg5)
 
 
 ```
@@ -122,17 +123,18 @@ B0 and B1 are estimated to be 2.1172 and 1.9675 respectively. B0 is closer to it
 
 **(repeating)e)**
 ```{r}
-reg3 = lm(y~x2, data = trueRegDF2)
-summary(reg3)
+reg6 = lm(y~x2, data = trueRegDF2)
+summary(reg6)
 
 ```
 B0 and B2 are estimated to be 2.1199 and 3.9273 respectively. Again, B0 is relatively close to its true value of 2. At the 5% significance level we reject the null hypothesis that B2 = 0 in favor of the alternative hypothesis that it does not equal 0. Similarly to the previous model, the residual standard error is 1.051, which is close to our value of sigma/sigma-squared.
 
-The main difference between these models stems from how x2 is generated. Where
+The main difference between these models stems from how x2 is generated. Whereas in part 1 x2 and x1 are both generated from random samples from the uniform distribution, in part 2, x2 is sampled from a normal distribution.
 
 
-**3**
+**3** *What effect does this new observation have on the each of the models? In each model, is this observation an outlier? A high-leverage point?*
 ```{r}
+
 x1 <- c(x1, 0.1)
 x2 <- c(x2, 0.8)
 y <- c(y, 6)
@@ -141,34 +143,56 @@ y <- c(y, 6)
 newRegDF = data.frame(x1 = x1, x2 = x2, y = y)
 
 #repeating c)
-reg1 = lm(y~x1+x2, data = newRegDF)
-summary(reg1)
+fit1 = lm(y~x1+x2, data = newRegDF)
+summary(fit1)
 
 
+which.max(hatvalues(fit1)) #confirms my suspicion that 101st observation has high leverage
+#it has the greatest leverage actually
 
 par(mfrow = c(2,2))
-plot(reg1)
+plot(fit1)
+
+library(car) 
+influencePlot(fit1, id = "identify", main = 'Influence Plot')
+
 
 ```
+
+
+The main difference I notice is that the standard errors for B1 and B2 are significantly lower here than in 2c, where we ran a regression of y on x1 and x2 (without these additional observations of x1 and x2). the R squared is also noticeably higher (.46 as opposed to .32, as seen in 2c.)
+
+The additional observation is definitely an outlier and a high leverage point. We can see this in the scale location plot as well as the residuals vs leverage plot and residuals vs Fitted plot. Notice how the 101st observation passes the dashed line representing Cook's distance in the Residuals vs Leverage diagnostic plot.
+
+
 
 
 ```{r}
 #repeating d)
- reg2 = lm(y~x1, data = newRegDF)
-summary(reg2)
+ fit2 = lm(y~x1, data = newRegDF)
+summary(fit2)
 par(mfrow = c(2,2))
-plot(reg2)
+plot(fit2)
 
+which.max(hatvalues(fit2))
 
 ```
+
+Now that x2 is no longer included in the model, the diagnostic plots all look pretty standard. Looking at the normal qqplot, it appears it may still have a large residual(potential outlier). Based on the diagnostic plots, it doesn't look like it is highly influential.
+
+I also do not think it is a high leverage point, as when i calculate the hatvalues (leverage points) of fit2, and then find the largest, it isn't that 101st observation anymore.
+
 
 ```{r}
-reg3 = lm(y~x2,data =newRegDF)
-summary(reg3)
+fit3 = lm(y~x2,data =newRegDF)
+summary(fit3)
 par(mfrow = c(2,2))
-plot(reg3)
-anova(reg3)
+plot(fit3)
+which.max(hatvalues(fit3))
+
 
 ```
+Unsurprisingly, the 101st observation has reappeared as potentially concerning, as seen in the diagnostic plots, but again it does not appear to be influential (since it doesn't cross the dashed line representing Cook's distance.) 
 
+It is a high leverage point, but it is not an outlier based on the residuals vs leverage and normal qqplot.
 
