@@ -3,6 +3,7 @@
 rm(list = ls())
 library(tidyverse)
 library(readr)
+library(kableExtra)
 insurance <- read_csv("/Users/collinkennedy/Downloads/Downloads/insurance.csv")
 
 
@@ -140,18 +141,24 @@ step(insuranceModel, direction = "backward")
 
 
 
+
+
 #4========================================================================================
 #create training dataset and test data set
 set.seed(1)
 insurance$smoker = factor(insurance$smoker)
 
+
+#create the training dataset
 insurance_train = insurance %>% 
   sample_frac(.8)
 
+
+#create the test training set
 insurance_test = insurance %>% 
   sample_frac(.2)
 
-  
+#build the logistic regression model using the training dataset
 logreg = glm(smoker~charges, data = insurance_train, family = "binomial")
 
 summary(logreg)
@@ -162,20 +169,8 @@ predicted<-ifelse(predict(logreg, type = "response",newdata = insurance_test)>.5
 
 
 
-confusion<-table(predicted,insurance_test$smoker,dnn = c("Predicted smoker","True smoker"))
-confusion
-
-accuracy <- sum(diag(confusion))/sum(confusion)
-misclassification <- 1-accuracy
-misclassification
 
 
-tpr = (confusion[4])/(confusion[4] + confusion[3]) #true positive rate 
-tpr
-
-specificity = confusion[1]/(confusion[1] + confusion[2]) #true negative rate =>
-                                                        #TrueNegative/(TN + FP)
-specificity
 #present accuracy rate and prediction rate
 
 
@@ -189,8 +184,6 @@ predicted_df
 cbind(insurance_test, prob)#add the predicted probabilities to the test dataframe
 
 # some plots
-iris_binary<-cbind(iris_binary, prob)
-
 
 ggplot(data = insurance_test) +
   geom_point(mapping = aes (x = 1:268, y = prob, colour = smoker)) +
@@ -198,12 +191,53 @@ ggplot(data = insurance_test) +
   labs(y = "Pr(Smoker = \"Yes\" | Medical Charges)")+
   ggtitle("Scatterplot: Probability of an Individual Being a Smoker, Given Medical Charges")
 
+#Consider this scatterplot of the probability of being a smoker given one's 
+#medical. Each point represents an individual (observation) from the test insurance
+#data. Points that fall above the line are classified as smokers, and the individuals
+#who fall below the line are classified as non-smokers. 
 
-
+#Most noticeably, the points(individuals) are color-coded based on whether or not 
+#they are actually a smoker. In other words, the red points above the line, and the 
+#blue points below the line represent individuals who are misclassified as smokers and non-smokers
+#Incorrectly. However, it is pretty remarkeable how accurate the logistic regression 
+#model appears to be with just a single predictor.
 #It does appear we can predict whether or not an individual is a smoker based on their
-#medical costs
+#medical costs.
 
+#While the visual representation is nice, let's consider a handful of useful statistics
+#that allow us to quantify how useful this model is:
+
+
+confusion<-table(predicted,insurance_test$smoker,dnn = c("Predicted smoker","True smoker"))
+
+confusion = matrix(confusion,2,2)
+rownames(confusion) = c("predicted no", "predicted yes")
+colnames(confusion) = c("true no", "true yes")
+
+
+confusion %>% 
+  kbl(caption = "Contingency Table: Predicted Smoker vs. Actual Smoker") %>%
+  kable_styling()
+
+
+accuracy <- sum(diag(confusion))/sum(confusion)
+accuracy
+
+misclassification <- 1-accuracy
+misclassification
+
+
+
+tpr = (confusion[4])/(confusion[4] + confusion[3]) #true positive rate (same as power)
+tpr
+
+specificity = confusion[1]/(confusion[1] + confusion[2]) #true negative rate =>
+#TrueNegative/(TN + FP)
+specificity
 #make a nice contigency table
+
+
+
 #interpret the results, and describe the implications of the accuracy and
 #misclassification rate
 
