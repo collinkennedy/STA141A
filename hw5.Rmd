@@ -1,0 +1,110 @@
+---
+title: 'STA 141A Fall 2020: Homework 5'
+author: 'Collin Kennedy'
+date: "12/3/2020"
+output:
+  html_document:
+    number_sections: no
+---
+
+
+# Principal component analysis
+
+The goal of this homework assignment is to explore the `environmental` data set using principal component analysis (PCA) and to understand how much information we lose by reducing the dimension of the data set.
+
+The data set comes from the package `lattice` but it can be loaded using the file `environmental.RData` which is available on Canvas. The data set contains daily measurements of ozone concentration, wind speed, temperature and solar radiation in New York City from May to September of 1973 (`111` observations of `4` features).
+
+**1.** *(2 points) Calculate the correlation matrix of all four variables. Determine which two correlation coefficients are the highest in absolute value. Include the names of the variables that lead to the two highest correlation coefficients in absolute value.*
+```{r}
+load("/Users/collinkennedy/Downloads/Downloads/environmental.RData")
+cor(environmental)
+
+```
+Based on the output of the correlation matrix, it appears that ozone and temperature have the largest (sample) correlation coefficient in the dataset of about .6985.
+
+Wind and Ozone are next highly correlated variables, with a sample correlation coefficient of about $\lvert -.6129 \rvert$ = .6129
+
+
+
+**2.** *(4 points) Calculate the loadings of the principal components as well as the standard deviations of the scores. The variables should be shifted to be zero centered and scaled to have unit variance before the calculation takes place.*
+```{r}
+#calculate the loadings
+principalCompOut = prcomp(environmental, scale. = TRUE, center =TRUE)
+principalCompOut$rotation
+```
+
+```{r}
+#principal components
+principalCompOut$x
+```
+
+
+```{r}
+#standard deviations of the scores
+principalCompOut$sdev
+```
+
+
+
+**3.** *(2 points) Verify that the sum of squares of the loadings of each principal component is equal to 1.*
+```{r}
+sumOfSquares = 0
+for(row in 1:nrow(principalCompOut$rotation)){
+  sumOfSquares = sumOfSquares + var(principalCompOut$rotation[row,])
+}
+sumOfSquares
+
+```
+
+**4.** *(6 points) Which are the two largest loadings in absolute value of the first principal component (include the names of the variables)? How does that correspond to the correlation analysis of the first question?*
+```{r}
+principalCompOut$rotation
+
+
+```
+Ozone and temperature appear to be the two largest loadings of the first principal component (PC1). 
+
+This is consistent with what I found in the correlation matrix: Ozone and Temperature had the greatest correlation amongst the variables in the dataset.
+
+**5.** *(2 points) Which is the largest loading in absolute value of the second principal component (include the name of the variable)?*
+```{r}
+
+
+```
+Radiation appears to be the largest loading of the second principal component.
+
+
+**6.** *(4 points) What proportion of the total variance does the first principal component explain? What proportion of the total variance does the fourth principal component explain?*
+```{r}
+#explained by first principal component
+var(principalCompOut$rotation[1,])/sumOfSquares
+
+
+
+
+#explained by fourth principal component
+var(principalCompOut$rotation[4,])/sumOfSquares
+
+
+
+```
+About 16% of the total variance is explained by the first principal component, and about 26% is explained by the fourth principal component.
+
+**7.** *(4 points) Is it enough to use the first two principal components if we want to explain at least 90% of the total variance? Explain your answer.*
+```{r}
+summary(principalCompOut)
+
+
+```
+
+No it is not. Based of the Cumulative Proportion of Variance Explained, the first two Principal Components only explain about 81% of the variance (which is obviously less than 90%).
+
+
+**8.** *(6 points) Create a biplot and explain what information we see in the biplot.*
+```{r}
+biplot(principalCompOut,scale = 0)
+
+```
+
+The biplot allows me to visualize 4 dimensional data in 2 dimensions. The first principal component is capturing the effect of Temperature and Ozone, and the second principal component is capturing the effect of Wind and Ration. While Wind and Radiation appear to be relatively uncorrelated, The vectors representing Temperature and Ozone are practically on top of each other, indicating they are highly correlated.
+s
